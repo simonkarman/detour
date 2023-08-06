@@ -1,7 +1,7 @@
+/* eslint-disable react/jsx-key */
 "use client";
 
-import {useState, MouseEvent} from 'react';
-import {IconType} from 'react-icons';
+import {useState, MouseEvent, JSX} from 'react';
 import {FaGithub, FaLanguage, FaLeftLong, FaRightLong, FaUpLong} from 'react-icons/fa6';
 
 type Direction = 'left' | 'right' | 'straight';
@@ -20,15 +20,15 @@ const dictionaries = new Map<Language, Map<Words, string>>([
   ])],
 ]);
 
-const icons = new Map<Direction, IconType>([
-  ['left', FaLeftLong],
-  ['right', FaRightLong],
-  ['straight', FaUpLong],
+const icons = new Map<Direction, JSX.Element>([
+  ['left', <FaLeftLong />],
+  ['right', <FaRightLong />],
+  ['straight', <FaUpLong />],
 ])
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>('en');
-  const dictionary = dictionaries.get(language);
+  const dictionary = dictionaries.get(language)!;
   const [direction, setDirection] = useState<Direction | undefined>('left');
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -68,8 +68,8 @@ export default function Home() {
       </div>
       <div className='grow flex flex-col justify-center'>
         {direction && <div className='flex flex-col items-center gap-12 lg:gap-16'>
-          <p className={`${secondaryTextColor} text-8xl lg:text-8xl font-bold text-white text-center`}>{icons.get(direction)!()}</p>
-          <h1 className={`text-6xl lg:text-8xl font-bold text-white text-center`}>{dictionary.get(direction)}</h1>
+          <p className={`${secondaryTextColor} text-8xl lg:text-8xl font-bold text-center`}>{icons.get(direction)}</p>
+          <h1 className='text-6xl lg:text-8xl font-bold text-white text-center'>{dictionary.get(direction)}</h1>
         </div>}
         {!direction && <svg className="animate-spin h-32 w-32 lg:h-48 lg:w-48 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
